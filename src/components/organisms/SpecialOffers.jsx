@@ -24,9 +24,9 @@ const SpecialOffers = () => {
     fetchOffers();
   }, []);
 
-  if (loading) {
+if (loading) {
     return (
-      <div className="py-16 bg-gradient-to-r from-primary to-secondary">
+      <div className="py-16 bg-primary">
         <div className="container mx-auto px-4">
           <div className="text-center text-white">
             <div className="animate-pulse">Loading special offers...</div>
@@ -40,12 +40,8 @@ const SpecialOffers = () => {
     return null;
   }
 
-  return (
-    <section className="py-16 bg-gradient-to-r from-primary via-secondary to-accent relative overflow-hidden">
-{/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.1%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%224%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
-      </div>
+return (
+    <section className="py-16 bg-primary relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -71,9 +67,9 @@ const SpecialOffers = () => {
               className="group"
             >
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20 hover:bg-white transition-all duration-300 transform hover:-translate-y-2 hover:shadow-3xl">
-                {/* Offer Badge */}
+{/* Offer Badge */}
                 {offer.discount && (
-                  <div className="inline-flex items-center px-4 py-2 bg-gradient-to-r from-accent to-primary text-white rounded-full text-sm font-bold mb-4">
+                  <div className="inline-flex items-center px-4 py-2 bg-accent text-white rounded-full text-sm font-bold mb-4">
                     <ApperIcon name="Tag" size={16} className="mr-2" />
                     {offer.discount}
                   </div>
