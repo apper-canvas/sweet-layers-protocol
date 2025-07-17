@@ -1,0 +1,60 @@
+[
+  {
+    "Id": 1,
+    "title": "Weekend Special",
+    "description": "Get 20% off all custom birthday cakes when you order over the weekend. Perfect for celebrating those special moments with our signature flavors.",
+    "discount": "20% OFF",
+    "ctaText": "Order Now",
+    "originalPrice": "50.00",
+    "salePrice": "40.00",
+    "validUntil": "2024-12-31",
+    "features": [
+      "Valid on all custom birthday cakes",
+      "Free personalized message",
+      "Choice of 5 signature flavors",
+      "24-hour advance notice required"
+    ],
+    "isActive": true,
+    "priority": 1,
+    "createdAt": "2024-01-15T10:00:00Z",
+    "updatedAt": "2024-01-15T10:00:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "Holiday Bundle",
+    "description": "Celebrate the season with our exclusive holiday cake collection. Buy 2 cakes and get the third one absolutely free!",
+    "discount": "Buy 2 Get 1 FREE",
+    "ctaText": "Shop Bundle",
+    "validUntil": "2024-12-25",
+    "features": [
+      "Mix and match any cakes",
+      "Free holiday decorations",
+      "Complimentary gift wrapping",
+      "Extended shelf life guarantee"
+    ],
+    "isActive": true,
+    "priority": 2,
+    "createdAt": "2024-01-10T14:30:00Z",
+    "updatedAt": "2024-01-10T14:30:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "First Time Customer",
+    "description": "New to Sweet Layers? Welcome! Enjoy 15% off your first order and discover why we're the neighborhood's favorite bakery.",
+    "discount": "15% OFF",
+    "ctaText": "Welcome Deal",
+    "originalPrice": "30.00",
+    "salePrice": "25.50",
+    "validUntil": "2024-12-31",
+    "features": [
+      "Valid for new customers only",
+      "No minimum order required",
+      "Includes free delivery",
+      "One-time use per customer"
+    ],
+    "isActive": true,
+    "priority": 3,
+    "createdAt": "2024-01-05T09:00:00Z",
+    "updatedAt": "2024-01-05T09:00:00Z"
+  }
+]
