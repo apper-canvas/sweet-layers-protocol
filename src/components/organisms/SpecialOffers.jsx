@@ -21,9 +21,9 @@ const SpecialOffers = () => {
       } finally {
         setLoading(false);
       }
-    };
+};
 
-fetchOffers();
+    fetchOffers();
   }, []);
 
   const handleApplyOffer = async (offer) => {
@@ -67,9 +67,7 @@ if (loading) {
     return (
       <div className="py-16 bg-primary">
         <div className="container mx-auto px-4">
-          <div className="text-center text-white">
-            <div className="animate-pulse">Loading special offers...</div>
-          </div>
+          <Loading />
         </div>
       </div>
     );
