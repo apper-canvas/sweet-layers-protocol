@@ -69,7 +69,7 @@ return (
               <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-8 shadow-2xl border border-white/20 hover:bg-white transition-all duration-300 transform hover:-translate-y-2 hover:shadow-3xl">
 {/* Offer Badge */}
                 {offer.discount && (
-                  <div className="inline-flex items-center px-4 py-2 bg-accent text-white rounded-full text-sm font-bold mb-4">
+                  <div className="inline-flex items-center px-4 py-2 bg-primary text-white rounded-full text-sm font-bold mb-4">
                     <ApperIcon name="Tag" size={16} className="mr-2" />
                     {offer.discount}
                   </div>
