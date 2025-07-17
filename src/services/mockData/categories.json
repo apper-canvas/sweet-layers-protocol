@@ -1,22 +1,22 @@
 [
   {
     "Id": 1,
-    "name": "Chocolate",
+    "name": "Birthday Cakes",
     "displayOrder": 1
   },
   {
     "Id": 2,
-    "name": "Vanilla",
+    "name": "Wedding Cakes",
     "displayOrder": 2
   },
   {
     "Id": 3,
-    "name": "Fruit",
+    "name": "Cupcakes",
     "displayOrder": 3
   },
   {
     "Id": 4,
-    "name": "Specialty",
+    "name": "Custom Cakes",
     "displayOrder": 4
   }
 ]
