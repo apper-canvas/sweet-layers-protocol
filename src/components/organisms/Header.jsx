@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useSelector } from "react-redux";
 import ApperIcon from "@/components/ApperIcon";
 import NavLink from "@/components/molecules/NavLink";
+import { AuthContext } from "@/App";
+import Button from "@/components/atoms/Button";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { logout } = useContext(AuthContext);
+  const { user, isAuthenticated } = useSelector((state) => state.user);
 
   const navItems = [
     { to: "/", label: "Home" },
@@ -13,6 +18,10 @@ const Header = () => {
     { to: "/about", label: "About" },
     { to: "/contact", label: "Contact" },
   ];
+
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <header className="bg-white/95 backdrop-blur-sm shadow-lg sticky top-0 z-50">
@@ -27,13 +36,29 @@ const Header = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
+{/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
               <NavLink key={item.to} to={item.to}>
                 {item.label}
               </NavLink>
             ))}
+            {isAuthenticated && (
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-gray-600">
+                  Welcome, {user?.firstName || user?.name || 'User'}
+                </span>
+                <Button
+                  onClick={handleLogout}
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <ApperIcon name="LogOut" className="w-4 h-4" />
+                  Logout
+                </Button>
+              </div>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -53,7 +78,7 @@ const Header = () => {
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden py-4 border-t border-gray-200"
-            >
+>
               <div className="flex flex-col gap-2">
                 {navItems.map((item) => (
                   <NavLink 
@@ -65,6 +90,22 @@ const Header = () => {
                     {item.label}
                   </NavLink>
                 ))}
+                {isAuthenticated && (
+                  <div className="border-t border-gray-200 pt-4 mt-4">
+                    <div className="text-sm text-gray-600 mb-2">
+                      Welcome, {user?.firstName || user?.name || 'User'}
+                    </div>
+                    <Button
+                      onClick={handleLogout}
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-2 w-full"
+                    >
+                      <ApperIcon name="LogOut" className="w-4 h-4" />
+                      Logout
+                    </Button>
+                  </div>
+                )}
               </div>
             </motion.nav>
           )}
