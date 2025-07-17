@@ -20,8 +20,17 @@ const CakeDetail = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedFlavor, setSelectedFlavor] = useState("");
   const [quantity, setQuantity] = useState(1);
-  const [showOrderForm, setShowOrderForm] = useState(false);
+const [showOrderForm, setShowOrderForm] = useState(false);
   const [orderLoading, setOrderLoading] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState('cash');
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
+  const [paymentLoading, setPaymentLoading] = useState(false);
+  const [paymentData, setPaymentData] = useState({
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    cardholderName: ''
+  });
   const [customerInfo, setCustomerInfo] = useState({
     name: '',
     email: '',
@@ -61,7 +70,7 @@ const handleAddToBag = () => {
     setShowOrderForm(true);
   };
 
-  const handleOrderSubmit = async (e) => {
+const handleOrderSubmit = async (e) => {
     e.preventDefault();
     
     if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
@@ -69,6 +78,17 @@ const handleAddToBag = () => {
       return;
     }
 
+    if (paymentMethod === 'online') {
+      // For online payment, show payment form first
+      setShowPaymentForm(true);
+      return;
+    }
+
+    // For cash on delivery, place order directly
+    await processOrder();
+  };
+
+  const processOrder = async () => {
     setOrderLoading(true);
     
     try {
@@ -83,12 +103,18 @@ const handleAddToBag = () => {
         cakeFlavor: selectedFlavor,
         quantity: quantity,
         totalAmount: cake.price * quantity,
-        specialInstructions: customerInfo.specialInstructions
+        specialInstructions: customerInfo.specialInstructions,
+        paymentMethod: paymentMethod,
+        paymentStatus: paymentMethod === 'cash' ? 'pending' : 'paid'
       };
 
       await orderService.create(orderData);
-      toast.success("Order placed successfully! We'll contact you soon.");
+      toast.success(paymentMethod === 'cash' 
+        ? "Order placed successfully! We'll contact you soon." 
+        : "Payment successful! Your order has been placed.");
+      
       setShowOrderForm(false);
+      setShowPaymentForm(false);
       setCustomerInfo({
         name: '',
         email: '',
@@ -96,11 +122,72 @@ const handleAddToBag = () => {
         address: '',
         specialInstructions: ''
       });
+      setPaymentData({
+        cardNumber: '',
+        expiryDate: '',
+        cvv: '',
+        cardholderName: ''
+      });
     } catch (error) {
       toast.error("Failed to place order. Please try again.");
     } finally {
       setOrderLoading(false);
     }
+  };
+
+  const handlePaymentSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!validatePaymentForm()) {
+      return;
+    }
+
+    setPaymentLoading(true);
+    
+    try {
+      // Simulate payment processing
+      await new Promise(resolve => setTimeout(resolve, 3000));
+      
+      // Simulate random payment success/failure (90% success rate)
+      if (Math.random() > 0.1) {
+        toast.success("Payment processed successfully!");
+        setShowPaymentForm(false);
+        await processOrder();
+      } else {
+        toast.error("Payment failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Payment processing failed. Please try again.");
+    } finally {
+      setPaymentLoading(false);
+    }
+  };
+
+  const handlePaymentInputChange = (field, value) => {
+    setPaymentData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const validatePaymentForm = () => {
+    if (!paymentData.cardNumber || paymentData.cardNumber.length < 16) {
+      toast.error("Please enter a valid card number");
+      return false;
+    }
+    if (!paymentData.expiryDate || paymentData.expiryDate.length < 5) {
+      toast.error("Please enter a valid expiry date");
+      return false;
+    }
+    if (!paymentData.cvv || paymentData.cvv.length < 3) {
+      toast.error("Please enter a valid CVV");
+      return false;
+    }
+    if (!paymentData.cardholderName) {
+      toast.error("Please enter the cardholder name");
+      return false;
+    }
+    return true;
   };
 
   const handleInputChange = (field, value) => {
@@ -403,6 +490,62 @@ const handleAddToBag = () => {
                           rows="3"
                           placeholder="Any special requirements or notes..."
                         />
+</div>
+
+                      {/* Payment Method Selection */}
+                      <div className="bg-white p-6 rounded-xl shadow-sm mb-6">
+                        <h3 className="font-semibold text-gray-800 mb-4 flex items-center gap-2">
+                          <ApperIcon name="CreditCard" className="w-5 h-5" />
+                          Payment Method
+                        </h3>
+                        <div className="space-y-3">
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="radio"
+                              id="cash"
+                              name="paymentMethod"
+                              value="cash"
+                              checked={paymentMethod === 'cash'}
+                              onChange={(e) => setPaymentMethod(e.target.value)}
+                              className="w-4 h-4 text-primary focus:ring-primary"
+                            />
+                            <label htmlFor="cash" className="flex items-center gap-2 cursor-pointer">
+                              <ApperIcon name="Banknote" className="w-5 h-5 text-green-600" />
+                              <span className="font-medium text-gray-800">Cash on Delivery</span>
+                            </label>
+                          </div>
+                          <div className="flex items-center gap-3">
+                            <input
+                              type="radio"
+                              id="online"
+                              name="paymentMethod"
+                              value="online"
+                              checked={paymentMethod === 'online'}
+                              onChange={(e) => setPaymentMethod(e.target.value)}
+                              className="w-4 h-4 text-primary focus:ring-primary"
+                            />
+                            <label htmlFor="online" className="flex items-center gap-2 cursor-pointer">
+                              <ApperIcon name="CreditCard" className="w-5 h-5 text-blue-600" />
+                              <span className="font-medium text-gray-800">Pay Now (Online)</span>
+                            </label>
+                          </div>
+                        </div>
+                        {paymentMethod === 'cash' && (
+                          <div className="mt-3 p-3 bg-yellow-50 rounded-lg">
+                            <p className="text-yellow-800 text-sm">
+                              <ApperIcon name="Info" className="w-4 h-4 inline mr-1" />
+                              Pay when your order is delivered to your doorstep
+                            </p>
+                          </div>
+                        )}
+                        {paymentMethod === 'online' && (
+                          <div className="mt-3 p-3 bg-blue-50 rounded-lg">
+                            <p className="text-blue-800 text-sm">
+                              <ApperIcon name="Shield" className="w-4 h-4 inline mr-1" />
+                              Secure online payment with instant confirmation
+                            </p>
+                          </div>
+                        )}
                       </div>
 
                       <div className="bg-blue-50 rounded-lg p-4 mb-6">
@@ -420,7 +563,6 @@ const handleAddToBag = () => {
                           Open: Mon-Sat 8AM-8PM, Sun 9AM-6PM
                         </p>
                       </div>
-
                       <div className="flex gap-3 pt-4">
                         <Button
                           type="button"
@@ -440,9 +582,160 @@ const handleAddToBag = () => {
                               Processing...
                             </div>
                           ) : (
+<>
+                              <ApperIcon name={paymentMethod === 'online' ? "CreditCard" : "Check"} className="w-5 h-5 mr-2" />
+                              {paymentMethod === 'online' ? 'Proceed to Payment' : 'Place Order'}
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </motion.div>
+              </motion.div>
+)}
+
+            {/* Payment Form Modal */}
+            {showPaymentForm && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+                onClick={() => setShowPaymentForm(false)}
+              >
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  className="bg-white rounded-2xl shadow-2xl max-w-md w-full"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-display font-bold text-gray-800">
+                        Payment Details
+                      </h2>
+                      <button
+                        onClick={() => setShowPaymentForm(false)}
+                        className="text-gray-500 hover:text-gray-700 transition-colors"
+                      >
+                        <ApperIcon name="X" className="w-6 h-6" />
+                      </button>
+                    </div>
+
+                    {/* Payment Summary */}
+                    <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                      <div className="flex items-center justify-between">
+                        <span className="text-gray-600">Total Amount:</span>
+                        <span className="text-2xl font-bold text-primary">
+                          ${(cake.price * quantity).toFixed(2)}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Payment Form */}
+                    <form onSubmit={handlePaymentSubmit} className="space-y-4">
+                      <div>
+                        <Label htmlFor="cardNumber">Card Number *</Label>
+                        <Input
+                          id="cardNumber"
+                          type="text"
+                          value={paymentData.cardNumber}
+                          onChange={(e) => {
+                            const value = e.target.value.replace(/\D/g, '').substring(0, 16);
+                            handlePaymentInputChange('cardNumber', value);
+                          }}
+                          placeholder="1234 5678 9012 3456"
+                          className="mt-1"
+                          required
+                        />
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="expiryDate">Expiry Date *</Label>
+                          <Input
+                            id="expiryDate"
+                            type="text"
+                            value={paymentData.expiryDate}
+                            onChange={(e) => {
+                              let value = e.target.value.replace(/\D/g, '');
+                              if (value.length >= 2) {
+                                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+                              }
+                              handlePaymentInputChange('expiryDate', value);
+                            }}
+                            placeholder="MM/YY"
+                            className="mt-1"
+                            maxLength="5"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="cvv">CVV *</Label>
+                          <Input
+                            id="cvv"
+                            type="text"
+                            value={paymentData.cvv}
+                            onChange={(e) => {
+                              const value = e.target.value.replace(/\D/g, '').substring(0, 3);
+                              handlePaymentInputChange('cvv', value);
+                            }}
+                            placeholder="123"
+                            className="mt-1"
+                            maxLength="3"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="cardholderName">Cardholder Name *</Label>
+                        <Input
+                          id="cardholderName"
+                          type="text"
+                          value={paymentData.cardholderName}
+                          onChange={(e) => handlePaymentInputChange('cardholderName', e.target.value)}
+                          placeholder="John Doe"
+                          className="mt-1"
+                          required
+                        />
+                      </div>
+
+                      <div className="bg-green-50 rounded-lg p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <ApperIcon name="Shield" className="w-5 h-5 text-green-600" />
+                          <span className="font-medium text-green-800">Secure Payment</span>
+                        </div>
+                        <p className="text-green-700 text-sm">
+                          Your payment information is encrypted and secure
+                        </p>
+                      </div>
+
+                      <div className="flex gap-3 pt-4">
+                        <Button
+                          type="button"
+                          onClick={() => setShowPaymentForm(false)}
+                          className="flex-1 bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors"
+                          disabled={paymentLoading}
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="submit"
+                          disabled={paymentLoading}
+                          className="flex-1 bg-gradient-to-r from-primary to-secondary text-white hover:shadow-lg transition-all duration-300"
+                        >
+                          {paymentLoading ? (
+                            <div className="flex items-center justify-center gap-2">
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                              Processing...
+                            </div>
+                          ) : (
                             <>
-                              <ApperIcon name="Check" className="w-5 h-5 mr-2" />
-                              Place Order
+                              <ApperIcon name="CreditCard" className="w-5 h-5 mr-2" />
+                              Pay ${(cake.price * quantity).toFixed(2)}
                             </>
                           )}
                         </Button>
