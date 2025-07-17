@@ -1,0 +1,22 @@
+[
+  {
+    "Id": 1,
+    "name": "Chocolate",
+    "displayOrder": 1
+  },
+  {
+    "Id": 2,
+    "name": "Vanilla",
+    "displayOrder": 2
+  },
+  {
+    "Id": 3,
+    "name": "Fruit",
+    "displayOrder": 3
+  },
+  {
+    "Id": 4,
+    "name": "Specialty",
+    "displayOrder": 4
+  }
+]
