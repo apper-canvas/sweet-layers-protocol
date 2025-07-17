@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import offersService from "@/services/api/offersService";
 import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
@@ -8,6 +9,7 @@ import Button from "@/components/atoms/Button";
 const SpecialOffers = () => {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [applyingOffer, setApplyingOffer] = useState(null);
 
   useEffect(() => {
     const fetchOffers = async () => {
@@ -21,9 +23,46 @@ const SpecialOffers = () => {
       }
     };
 
-    fetchOffers();
+fetchOffers();
   }, []);
 
+  const handleApplyOffer = async (offer) => {
+    // Prevent multiple applications
+    if (applyingOffer === offer.Id) return;
+    
+    setApplyingOffer(offer.Id);
+    
+    try {
+      await offersService.applyOffer(offer.Id);
+      
+      toast.success(
+        `🎉 ${offer.title} applied successfully! You saved ${offer.discount}`,
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+      
+    } catch (error) {
+      toast.error(
+        error.message || "Failed to apply offer. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 4000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        }
+      );
+    } finally {
+      setApplyingOffer(null);
+    }
+  };
 if (loading) {
     return (
       <div className="py-16 bg-primary">
@@ -110,12 +149,23 @@ return (
                 )}
 
                 {/* Call to Action */}
-                <div className="flex items-center justify-between">
+<div className="flex items-center justify-between">
                   <Button
-                    className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-semibold px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                    onClick={() => handleApplyOffer(offer)}
+                    disabled={applyingOffer === offer.Id}
+                    className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-semibold px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    {offer.ctaText || 'Claim Offer'}
-                    <ApperIcon name="ArrowRight" size={16} className="ml-2" />
+                    {applyingOffer === offer.Id ? (
+                      <>
+                        <ApperIcon name="Loader2" size={16} className="mr-2 animate-spin" />
+                        Applying...
+                      </>
+                    ) : (
+                      <>
+                        {offer.ctaText || 'Claim Offer'}
+                        <ApperIcon name="ArrowRight" size={16} className="ml-2" />
+                      </>
+                    )}
                   </Button>
                   
                   {offer.originalPrice && offer.salePrice && (

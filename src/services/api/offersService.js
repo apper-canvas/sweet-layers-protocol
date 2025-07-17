@@ -59,9 +59,36 @@ const offersService = {
       throw new Error('Offer not found');
     }
 
-    const deletedOffer = offersData[index];
+const deletedOffer = offersData[index];
     offersData.splice(index, 1);
     return { ...deletedOffer };
+  },
+
+  async applyOffer(id) {
+    await delay(800);
+    const parsedId = parseInt(id);
+    const offer = offersData.find(offer => offer.Id === parsedId);
+    
+    if (!offer) {
+      throw new Error('Offer not found');
+    }
+
+    if (!offer.isActive) {
+      throw new Error('This offer is no longer active');
+    }
+
+    if (offer.validUntil && new Date(offer.validUntil) < new Date()) {
+      throw new Error('This offer has expired');
+    }
+
+    // Simulate offer application success
+    return {
+      success: true,
+      message: 'Offer applied successfully',
+      offerId: parsedId,
+      appliedAt: new Date().toISOString(),
+      savings: offer.discount
+    };
   }
 };
 
