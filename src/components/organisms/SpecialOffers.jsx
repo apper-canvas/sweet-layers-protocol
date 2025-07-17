@@ -1,14 +1,14 @@
 import { motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import offersService from "@/services/api/offersService";
 import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
 import Button from "@/components/atoms/Button";
+
 const SpecialOffers = () => {
-  const navigate = useNavigate();
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const fetchOffers = async () => {
       try {
@@ -109,15 +109,15 @@ return (
                   </div>
                 )}
 
-{/* Call to Action */}
+                {/* Call to Action */}
                 <div className="flex items-center justify-between">
                   <Button
-                    onClick={() => navigate(`/cake/${offer.cakeId}`)}
                     className="bg-gradient-to-r from-primary to-secondary hover:from-secondary hover:to-primary text-white font-semibold px-6 py-3 rounded-xl shadow-lg transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
                   >
                     {offer.ctaText || 'Claim Offer'}
                     <ApperIcon name="ArrowRight" size={16} className="ml-2" />
                   </Button>
+                  
                   {offer.originalPrice && offer.salePrice && (
                     <div className="text-right">
                       <div className="text-sm text-gray-500 line-through">
