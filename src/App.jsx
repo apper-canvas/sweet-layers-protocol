@@ -6,17 +6,19 @@ import Home from "@/components/pages/Home";
 import Menu from "@/components/pages/Menu";
 import About from "@/components/pages/About";
 import Contact from "@/components/pages/Contact";
+import CakeDetail from "@/components/pages/CakeDetail";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Routes>
-          <Route path="/" element={<Layout />}>
+<Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path="menu" element={<Menu />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
+            <Route path="cake/:id" element={<CakeDetail />} />
           </Route>
         </Routes>
         <ToastContainer

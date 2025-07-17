@@ -6,105 +6,225 @@
     "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Birthday Cakes",
     "description": "Rich, moist chocolate cake with decadent chocolate frosting and chocolate shavings",
-    "featured": true
+    "featured": true,
+    "ingredients": ["Premium dark chocolate", "Cocoa powder", "Fresh eggs", "Butter", "Vanilla extract", "All-purpose flour", "Sugar", "Baking powder"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Dark Chocolate", "Milk Chocolate", "White Chocolate"],
+    "dietaryOptions": ["Gluten-free available", "Vegan option"],
+    "nutritionalInfo": {
+      "calories": "450 per slice",
+      "fat": "18g",
+      "carbs": "65g",
+      "protein": "8g"
+    }
   },
-  {
+{
     "Id": 2,
     "name": "Vanilla Dream Cake",
     "price": 39.99,
     "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Wedding Cakes",
     "description": "Light and fluffy vanilla sponge with smooth vanilla buttercream and fresh berries",
-    "featured": true
+    "featured": true,
+    "ingredients": ["Madagascar vanilla beans", "Fresh cream", "Organic eggs", "Unsalted butter", "Cake flour", "Sugar", "Fresh berries", "Baking powder"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Vanilla", "French Vanilla", "Vanilla Bean"],
+    "dietaryOptions": ["Gluten-free available", "Low sugar option"],
+    "nutritionalInfo": {
+      "calories": "380 per slice",
+      "fat": "14g",
+      "carbs": "58g",
+      "protein": "6g"
+    }
   },
-  {
+{
     "Id": 3,
     "name": "Strawberry Delight",
     "price": 42.99,
     "image": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Birthday Cakes",
     "description": "Fresh strawberry cake with strawberry filling and cream cheese frosting",
-    "featured": true
+    "featured": true,
+    "ingredients": ["Fresh strawberries", "Cream cheese", "Vanilla extract", "Fresh eggs", "Butter", "Cake flour", "Sugar", "Strawberry puree"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Fresh Strawberry", "Strawberry Vanilla", "Wild Berry"],
+    "dietaryOptions": ["Gluten-free available", "Natural fruit sweetened"],
+    "nutritionalInfo": {
+      "calories": "410 per slice",
+      "fat": "16g",
+      "carbs": "62g",
+      "protein": "7g"
+    }
   },
-  {
+{
     "Id": 4,
     "name": "Red Velvet Elegance",
     "price": 48.99,
     "image": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Wedding Cakes",
     "description": "Classic red velvet cake with cream cheese frosting and elegant decoration",
-    "featured": true
+    "featured": true,
+    "ingredients": ["Cocoa powder", "Red food coloring", "Buttermilk", "Cream cheese", "Butter", "Vanilla extract", "All-purpose flour", "Sugar"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Red Velvet", "Chocolate Red Velvet", "Cream Cheese Swirl"],
+    "dietaryOptions": ["Gluten-free available", "Natural coloring option"],
+    "nutritionalInfo": {
+      "calories": "420 per slice",
+      "fat": "17g",
+      "carbs": "64g",
+      "protein": "6g"
+    }
   },
-  {
+{
     "Id": 5,
     "name": "Lemon Zest Cake",
     "price": 41.99,
     "image": "https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Cupcakes",
     "description": "Refreshing lemon cake with lemon curd filling and zesty lemon frosting",
-    "featured": true
+    "featured": true,
+    "ingredients": ["Fresh lemons", "Lemon zest", "Eggs", "Butter", "Sugar", "Flour", "Lemon curd", "Powdered sugar"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Lemon Zest", "Lemon Lime", "Meyer Lemon"],
+    "dietaryOptions": ["Gluten-free available", "Sugar-free option"],
+    "nutritionalInfo": {
+      "calories": "390 per slice",
+      "fat": "15g",
+      "carbs": "59g",
+      "protein": "5g"
+    }
   },
-  {
+{
     "Id": 6,
     "name": "Carrot Spice Cake",
     "price": 44.99,
     "image": "https://images.unsplash.com/photo-1621303837174-89787a7d4729?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Custom Cakes",
     "description": "Moist carrot cake with warm spices, walnuts, and cream cheese frosting",
-    "featured": true
+    "featured": true,
+    "ingredients": ["Fresh carrots", "Walnuts", "Cinnamon", "Nutmeg", "Cream cheese", "Eggs", "Vegetable oil", "Brown sugar", "Flour"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Carrot", "Carrot Walnut", "Spiced Carrot"],
+    "dietaryOptions": ["Gluten-free available", "Nut-free option", "Vegan option"],
+    "nutritionalInfo": {
+      "calories": "435 per slice",
+      "fat": "19g",
+      "carbs": "61g",
+      "protein": "7g"
+    }
   },
-  {
+{
     "Id": 7,
     "name": "Double Chocolate Fudge",
     "price": 52.99,
     "image": "https://images.unsplash.com/photo-1607478900766-efe13248b125?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Birthday Cakes",
     "description": "Intense double chocolate cake with rich fudge frosting and chocolate ganache",
-    "featured": false
+    "featured": false,
+    "ingredients": ["Dark chocolate", "Cocoa powder", "Chocolate chips", "Heavy cream", "Butter", "Eggs", "Sugar", "Flour", "Chocolate ganache"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Double Dark", "Milk & Dark", "Triple Chocolate"],
+    "dietaryOptions": ["Gluten-free available", "Vegan option"],
+    "nutritionalInfo": {
+      "calories": "520 per slice",
+      "fat": "24g",
+      "carbs": "71g",
+      "protein": "9g"
+    }
   },
-  {
+{
     "Id": 8,
     "name": "Blueberry Bliss",
     "price": 43.99,
     "image": "https://images.unsplash.com/photo-1586985289906-406988974504?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Cupcakes",
     "description": "Fresh blueberry cake with blueberry compote and vanilla buttercream",
-    "featured": false
+    "featured": false,
+    "ingredients": ["Fresh blueberries", "Blueberry compote", "Vanilla extract", "Butter", "Sugar", "Eggs", "Flour", "Buttercream"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Blueberry Vanilla", "Wild Blueberry", "Lemon Blueberry"],
+    "dietaryOptions": ["Gluten-free available", "Natural fruit sweetened"],
+    "nutritionalInfo": {
+      "calories": "395 per slice",
+      "fat": "15g",
+      "carbs": "60g",
+      "protein": "6g"
+    }
   },
-  {
+{
     "Id": 9,
     "name": "Funfetti Celebration",
     "price": 38.99,
     "image": "https://images.unsplash.com/photo-1486427944299-d1955d23e34d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Birthday Cakes",
     "description": "Colorful funfetti cake with rainbow sprinkles and vanilla frosting",
-    "featured": false
+    "featured": false,
+    "ingredients": ["Rainbow sprinkles", "Vanilla extract", "Butter", "Sugar", "Eggs", "Flour", "Vanilla frosting", "Food coloring"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Funfetti", "Birthday Cake", "Confetti Vanilla"],
+    "dietaryOptions": ["Gluten-free available", "Natural coloring option"],
+    "nutritionalInfo": {
+      "calories": "365 per slice",
+      "fat": "13g",
+      "carbs": "57g",
+      "protein": "5g"
+    }
   },
-  {
+{
     "Id": 10,
     "name": "Tiramisu Cake",
     "price": 55.99,
     "image": "https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Custom Cakes",
     "description": "Italian-inspired tiramisu cake with coffee-soaked layers and mascarpone frosting",
-    "featured": false
+    "featured": false,
+    "ingredients": ["Mascarpone cheese", "Espresso", "Ladyfingers", "Cocoa powder", "Eggs", "Sugar", "Coffee liqueur", "Heavy cream"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Tiramisu", "Amaretto Tiramisu", "Chocolate Tiramisu"],
+    "dietaryOptions": ["Alcohol-free option", "Gluten-free available"],
+    "nutritionalInfo": {
+      "calories": "485 per slice",
+      "fat": "22g",
+      "carbs": "63g",
+      "protein": "8g"
+    }
   },
-  {
+{
     "Id": 11,
     "name": "Black Forest Cake",
     "price": 49.99,
     "image": "https://images.unsplash.com/photo-1602351447937-745cb720612f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Wedding Cakes",
     "description": "Rich chocolate cake with cherries, whipped cream, and chocolate shavings",
-    "featured": false
+    "featured": false,
+    "ingredients": ["Dark chocolate", "Fresh cherries", "Whipped cream", "Kirsch liqueur", "Eggs", "Sugar", "Flour", "Chocolate shavings"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Black Forest", "Cherry Chocolate", "Dark Cherry"],
+    "dietaryOptions": ["Alcohol-free option", "Gluten-free available"],
+    "nutritionalInfo": {
+      "calories": "455 per slice",
+      "fat": "19g",
+      "carbs": "66g",
+      "protein": "7g"
+    }
   },
-  {
+{
     "Id": 12,
     "name": "Coconut Paradise",
     "price": 46.99,
     "image": "https://images.unsplash.com/photo-1621038831872-fda1d68b9556?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80",
     "category": "Custom Cakes",
     "description": "Tropical coconut cake with coconut flakes and cream cheese frosting",
-    "featured": false
+    "featured": false,
+    "ingredients": ["Coconut flakes", "Coconut milk", "Cream cheese", "Vanilla extract", "Eggs", "Sugar", "Flour", "Tropical fruits"],
+    "sizes": ["6 inch", "8 inch", "10 inch", "12 inch"],
+    "flavors": ["Classic Coconut", "Coconut Lime", "Tropical Coconut"],
+    "dietaryOptions": ["Gluten-free available", "Dairy-free option", "Vegan option"],
+    "nutritionalInfo": {
+      "calories": "425 per slice",
+      "fat": "18g",
+      "carbs": "63g",
+      "protein": "6g"
+    }
   }
 ]

@@ -1,10 +1,16 @@
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import Card from "@/components/atoms/Card";
 import ApperIcon from "@/components/ApperIcon";
-
 const CakeCard = ({ cake }) => {
+  const navigate = useNavigate();
+
+  const handleViewDetails = () => {
+    navigate(`/cake/${cake.Id}`);
+  };
+
   return (
-    <Card className="group">
+    <Card className="group cursor-pointer" onClick={handleViewDetails}>
       <div className="relative overflow-hidden">
         <img 
           src={cake.image} 
@@ -18,10 +24,14 @@ const CakeCard = ({ cake }) => {
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
           <div className="absolute bottom-4 left-4 right-4">
-            <motion.button
+<motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="w-full bg-white/90 backdrop-blur-sm text-primary py-2 px-4 rounded-lg font-medium flex items-center justify-center gap-2 hover:bg-white transition-all duration-300"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleViewDetails();
+              }}
             >
               <ApperIcon name="Eye" className="w-4 h-4" />
               View Details
