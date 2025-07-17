@@ -3,10 +3,13 @@ import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
 import cakesService from "@/services/api/cakesService";
+import orderService from "@/services/api/orderService";
 import Button from "@/components/atoms/Button";
 import ApperIcon from "@/components/ApperIcon";
 import Loading from "@/components/ui/Loading";
 import Error from "@/components/ui/Error";
+import Input from "@/components/atoms/Input";
+import Label from "@/components/atoms/Label";
 
 const CakeDetail = () => {
   const { id } = useParams();
@@ -17,6 +20,15 @@ const CakeDetail = () => {
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedFlavor, setSelectedFlavor] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [showOrderForm, setShowOrderForm] = useState(false);
+  const [orderLoading, setOrderLoading] = useState(false);
+  const [customerInfo, setCustomerInfo] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    specialInstructions: ''
+  });
 
   useEffect(() => {
     const fetchCake = async () => {
@@ -41,24 +53,61 @@ const CakeDetail = () => {
     fetchCake();
   }, [id]);
 
-  const handleAddToBag = () => {
+const handleAddToBag = () => {
     if (!selectedSize || !selectedFlavor) {
       toast.error("Please select both size and flavor");
       return;
     }
+    setShowOrderForm(true);
+  };
 
-    const bagItem = {
-      id: cake.Id,
-      name: cake.name,
-      price: cake.price,
-      size: selectedSize,
-      flavor: selectedFlavor,
-      quantity: quantity,
-      image: cake.image
-    };
+  const handleOrderSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!customerInfo.name || !customerInfo.email || !customerInfo.phone) {
+      toast.error("Please fill in all required fields");
+      return;
+    }
 
-    // Here you would typically add to cart/bag state management
-    toast.success(`${cake.name} added to bag!`);
+    setOrderLoading(true);
+    
+    try {
+      const orderData = {
+        customerName: customerInfo.name,
+        customerEmail: customerInfo.email,
+        customerPhone: customerInfo.phone,
+        customerAddress: customerInfo.address,
+        cakeId: cake.Id,
+        cakeName: cake.name,
+        cakeSize: selectedSize,
+        cakeFlavor: selectedFlavor,
+        quantity: quantity,
+        totalAmount: cake.price * quantity,
+        specialInstructions: customerInfo.specialInstructions
+      };
+
+      await orderService.create(orderData);
+      toast.success("Order placed successfully! We'll contact you soon.");
+      setShowOrderForm(false);
+      setCustomerInfo({
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        specialInstructions: ''
+      });
+    } catch (error) {
+      toast.error("Failed to place order. Please try again.");
+    } finally {
+      setOrderLoading(false);
+    }
+  };
+
+  const handleInputChange = (field, value) => {
+    setCustomerInfo(prev => ({
+      ...prev,
+      [field]: value
+    }));
   };
 
   const handleQuantityChange = (change) => {
@@ -231,14 +280,178 @@ const CakeDetail = () => {
                 </span>
               </div>
 
-              <Button
+<Button
                 onClick={handleAddToBag}
                 className="w-full bg-gradient-to-r from-primary to-secondary text-white py-3 px-6 rounded-lg font-medium hover:shadow-lg transition-all duration-300"
               >
                 <ApperIcon name="ShoppingBag" className="w-5 h-5 mr-2" />
-                Add to Bag
+                Place Order
               </Button>
             </div>
+
+            {/* Order Form Modal */}
+            {showOrderForm && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+                onClick={() => setShowOrderForm(false)}
+              >
+                <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="p-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <h2 className="text-2xl font-display font-bold text-gray-800">
+                        Order Details
+                      </h2>
+                      <button
+                        onClick={() => setShowOrderForm(false)}
+                        className="text-gray-500 hover:text-gray-700 transition-colors"
+                      >
+                        <ApperIcon name="X" className="w-6 h-6" />
+                      </button>
+                    </div>
+
+                    {/* Order Summary */}
+                    <div className="bg-gray-50 rounded-lg p-4 mb-6">
+                      <h3 className="font-semibold text-gray-800 mb-3">Order Summary</h3>
+                      <div className="flex items-center gap-4 mb-3">
+                        <img
+                          src={cake.image}
+                          alt={cake.name}
+                          className="w-16 h-16 object-cover rounded-lg"
+                        />
+                        <div className="flex-1">
+                          <h4 className="font-medium text-gray-800">{cake.name}</h4>
+                          <p className="text-sm text-gray-600">
+                            {selectedSize} • {selectedFlavor} • Qty: {quantity}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-bold text-primary">
+                            ${(cake.price * quantity).toFixed(2)}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Customer Information Form */}
+                    <form onSubmit={handleOrderSubmit} className="space-y-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="name">Full Name *</Label>
+                          <Input
+                            id="name"
+                            type="text"
+                            value={customerInfo.name}
+                            onChange={(e) => handleInputChange('name', e.target.value)}
+                            className="mt-1"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="email">Email Address *</Label>
+                          <Input
+                            id="email"
+                            type="email"
+                            value={customerInfo.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            className="mt-1"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="phone">Phone Number *</Label>
+                          <Input
+                            id="phone"
+                            type="tel"
+                            value={customerInfo.phone}
+                            onChange={(e) => handleInputChange('phone', e.target.value)}
+                            className="mt-1"
+                            required
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="address">Delivery Address</Label>
+                          <Input
+                            id="address"
+                            type="text"
+                            value={customerInfo.address}
+                            onChange={(e) => handleInputChange('address', e.target.value)}
+                            className="mt-1"
+                            placeholder="Optional: for delivery orders"
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <Label htmlFor="instructions">Special Instructions</Label>
+                        <textarea
+                          id="instructions"
+                          value={customerInfo.specialInstructions}
+                          onChange={(e) => handleInputChange('specialInstructions', e.target.value)}
+                          className="mt-1 w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          rows="3"
+                          placeholder="Any special requirements or notes..."
+                        />
+                      </div>
+
+                      <div className="bg-blue-50 rounded-lg p-4 mb-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <ApperIcon name="Phone" className="w-5 h-5 text-blue-600" />
+                          <h4 className="font-medium text-blue-800">Alternative: Call to Order</h4>
+                        </div>
+                        <p className="text-blue-700 text-sm mb-2">
+                          You can also place your order by calling us directly:
+                        </p>
+                        <p className="text-blue-800 font-semibold text-lg">
+                          📞 (555) 123-CAKE
+                        </p>
+                        <p className="text-blue-600 text-sm mt-1">
+                          Open: Mon-Sat 8AM-8PM, Sun 9AM-6PM
+                        </p>
+                      </div>
+
+                      <div className="flex gap-3 pt-4">
+                        <Button
+                          type="button"
+                          onClick={() => setShowOrderForm(false)}
+                          className="flex-1 bg-gray-200 text-gray-800 hover:bg-gray-300 transition-colors"
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          type="submit"
+                          disabled={orderLoading}
+                          className="flex-1 bg-gradient-to-r from-primary to-secondary text-white hover:shadow-lg transition-all duration-300"
+                        >
+                          {orderLoading ? (
+                            <div className="flex items-center justify-center gap-2">
+                              <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                              Processing...
+                            </div>
+                          ) : (
+                            <>
+                              <ApperIcon name="Check" className="w-5 h-5 mr-2" />
+                              Place Order
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </form>
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
 
             {/* Nutritional Info */}
             {cake.nutritionalInfo && (
