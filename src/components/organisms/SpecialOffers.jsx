@@ -32,11 +32,11 @@ const SpecialOffers = () => {
     
     setApplyingOffer(offer.Id);
     
-    try {
-      await offersService.applyOffer(offer.Id);
+try {
+      const result = await offersService.applyOffer(offer.Id);
       
       toast.success(
-        `🎉 ${offer.title} applied successfully! You saved ${offer.discount}`,
+        `🎉 ${offer.title_c || offer.title} applied successfully! You saved ${offer.discount_c || offer.discount}`,
         {
           position: "top-right",
           autoClose: 4000,
