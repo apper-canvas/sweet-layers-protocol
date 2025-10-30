@@ -32,7 +32,7 @@ theme: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
-        popover: {
+popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
@@ -40,10 +40,9 @@ theme: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        surface: "#FFF8DC",
+        surface: "#F8FAFC",
         success: "#228B22",
         warning: "#FFA500",
-        error: "#DC143C",
         info: "#4682B4",
       },
       fontFamily: {

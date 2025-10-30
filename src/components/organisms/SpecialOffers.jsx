@@ -136,10 +136,10 @@ return (
                   </div>
                 )}
 
-                {/* Validity Period */}
+{/* Validity Period */}
                 {offer.validUntil && (
-                  <div className="mb-6 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-                    <div className="flex items-center text-sm text-yellow-800">
+                  <div className="mb-6 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <div className="flex items-center text-sm text-blue-800">
                       <ApperIcon name="Clock" size={16} className="mr-2" />
                       Valid until {new Date(offer.validUntil).toLocaleDateString()}
                     </div>
