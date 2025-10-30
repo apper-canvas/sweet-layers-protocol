@@ -10,7 +10,7 @@ const ErrorPage = () => {
       <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg text-center">
         <h1 className="text-2xl font-bold text-red-600 mb-4">Authentication Error</h1>
         <p className="text-gray-700 mb-6">{errorMessage}</p>
-        <Link to="/login" className="inline-block px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors">
+<Link to="/login" className="inline-block px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/80 transition-colors">
           Return to Login
         </Link>
       </div>

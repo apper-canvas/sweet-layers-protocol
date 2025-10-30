@@ -1,15 +1,15 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useSelector } from "react-redux";
 import ApperIcon from "@/components/ApperIcon";
 import NavLink from "@/components/molecules/NavLink";
-import { AuthContext } from "@/App";
+import { useAuth } from "@/layouts/Root";
 import Button from "@/components/atoms/Button";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { logout } = useContext(AuthContext);
+const { logout } = useAuth();
   const { user, isAuthenticated } = useSelector((state) => state.user);
 
   const navItems = [
